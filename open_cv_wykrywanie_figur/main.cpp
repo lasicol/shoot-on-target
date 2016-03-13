@@ -3,13 +3,13 @@
 #include <opencv\highgui.h>
 #include <windows.h>
 #include "Target.h"
-
+#include "Controller.h"
 
 using namespace std;
 using namespace cv;
 
 
-string const fileName = "tarcza//test (3).jpg";
+string const fileName = "tarcza//kolor.jpg";
 string const windowsNames[2] = {"Source","Output Image"};
 
 
@@ -17,12 +17,23 @@ Mat src, src_gray, img, frame;
 Mat dst, detected_edges, imgFinal;
 
 
+static const string EnumStrings[] = { "UP",
+"UP_RIGHT",
+"RIGHT",
+"DOWN_RIGHT",
+"DOWN",
+"DOWN_LEFT",
+"LEFT",
+"UP_LEFT" };
+//DirectionEnum direct;
+
 
 
 /** @function main */
 int main(int argc, char** argv)
 {
-	VideoCapture capture = VideoCapture(0);
+	VideoCapture capture = VideoCapture(1);
+
 	/// Load an image
 	src = imread(fileName);
 
@@ -40,6 +51,8 @@ int main(int argc, char** argv)
 
 
 	Target target;
+	Controller controller;
+	DirectionEnum direct;
 
 	//target.tuneLaserColorRatio(src);
 
@@ -51,19 +64,27 @@ int main(int argc, char** argv)
 	//target.findLaser(dst, &dst);
 	//imshow(windowsNames[1], dst);
 
-	target.setRadiusShild(120);
-	//target.setCannyThresh(30, 90);
-	while (waitKey(10) != 27)
+	//target.setRadiusShild(120);
+	target.setLaserColorRatio(110, 179, 10, 159, 176, 255); //143, 179, 10, 159, 176, 255
+
+	////target.setCannyThresh(30, 90);
+	while (waitKey(30) != 27)
 	{
 		capture >> frame;
 		frame.copyTo(img);
 		if (target.DetectTarget(img, &dst))
 		{
 			target.findLaser(img, &imgFinal);
+			Point center = target.getTargetCenter();
+			Point laser = target.getLaserPosition();
+			//Controller controller(target.getTargetCenter,target.getLaserPosition);
+			direct = controller.CountDirction(&center, &laser);
+			cout << EnumStrings[controller.lastDirection] << endl;
+			//cout << target.getLaserPosition()<<endl;
 			imshow(windowsNames[1], imgFinal);
+
 		}
-		imshow(windowsNames[0], img);
-		
+		imshow(windowsNames[0], dst);
 	}
 
 

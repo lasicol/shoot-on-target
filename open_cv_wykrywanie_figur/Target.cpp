@@ -17,6 +17,9 @@ Target::Target()
 	colorRatio[5] = 255;
 	lowThresh = 40;
 	upThresh = 120;
+	targetCenter = new Point(0, 0);
+	laser = new Point(0, 0);
+
 }
 
 
@@ -27,10 +30,14 @@ void Target::setRadiusShild(int radius)
 {
 	r_shild = radius;
 }
-void Target::setLaserColorRatio(int lower, int upper)
+void Target::setLaserColorRatio(int c1, int c2, int c3, int c4, int c5, int c6)
 {
-	lowerb = lower;
-	upperb = upper;
+	colorRatio[0] = c1;
+	colorRatio[1] = c2;
+	colorRatio[2] = c3;
+	colorRatio[3] = c4;
+	colorRatio[4] = c5;
+	colorRatio[5] = c6;
 }
 void Target::tuneLaserColorRatio(Mat imgInput)
 {
@@ -138,6 +145,14 @@ void Target::setCannyThresh(int low, int up)
 	lowThresh = low;
 	upThresh = up;
 }
+Point Target::getTargetCenter()
+{
+	return *targetCenter;
+}
+Point Target::getLaserPosition()
+{
+	return *laser;
+}
 bool Target::DetectTarget(Mat imgInput, Mat *imgOutput)
 {
 	Mat inputCopy, src_gray, src = imgInput, potential_target;
@@ -155,7 +170,7 @@ bool Target::DetectTarget(Mat imgInput, Mat *imgOutput)
 	/// Apply the Hough Transform to find the circles
 
 
-	HoughCircles(src_gray, circles, CV_HOUGH_GRADIENT, 1, src_gray.rows / 8, lowThresh, upThresh, min_radius, max_radius);
+	HoughCircles(src_gray, circles, CV_HOUGH_GRADIENT, 1, src_gray.rows / 2, lowThresh, upThresh, min_radius, max_radius);
 	
 	/// Draw the circles detected
 	for (size_t i = 0; i < circles.size(); i++)
@@ -163,50 +178,43 @@ bool Target::DetectTarget(Mat imgInput, Mat *imgOutput)
 		Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
 		int radius = cvRound(circles[i][2]);
 		// circle center
-		circle(src, center, 3, Scalar(0, 255, 0), -1, 8, 0);
+		circle(inputCopy, center, 3, Scalar(0, 255, 0), -1, 8, 0);
 		// circle outline
-		circle(src, center, radius, Scalar(0, 0, 255), 3, 8, 0);
+		circle(inputCopy, center, radius, Scalar(0, 0, 255), 3, 8, 0);
 		
+
 		//ostringstream ss;
 		//ss << radius;
 		//string s = ss.str();
 		//putText(inputCopy, s, Point(100, 150), CV_FONT_HERSHEY_COMPLEX, 1, Scalar(20, 40, 80), 3, 8);
+
 		try
 		{
-			potential_target = inputCopy(Rect(abs(center.x - r_shild), abs(center.y - r_shild), r_shild * 2, r_shild * 2));
+			//potential_target = inputCopy(Rect(abs(center.x - r_shild), abs(center.y - r_shild), r_shild * 2, r_shild * 2));
 			detected_circle = true;
-			targetCenter = center;
+			*targetCenter = center;
 		}
 		catch(...)
 		{
 			detected_circle = false;
 		}
-		//Mat result(1, 1, CV_64F);
-		//Mat lol2 = imread("lol.jpg");
-		//matchTemplate(potential_target, lol2, result, CV_TM_CCOEFF_NORMED);
-		//float corr_ratio = result.at<float>(0, 0);
-		//cout << looo;//result.at<double>(0, 0);
-		
-		//string s = "r= ";// +radius;
-		
-		//lol = src_c(Rect(center.x - r_shild, center.y - r_shild, r_shild * 2, r_shild * 2));
+
 	}
-	//lol.create(Size(200, 200),CV_8U);
+
 
 	if (detected_circle)
 	{
-		*imgOutput = potential_target;
-		target = potential_target;
+		*imgOutput = inputCopy;//potential_target;
+		//target = potential_target;
 		return true;
 	}
 	else
 	{
+		*imgOutput = inputCopy;
 		detected_circle = false;
 		return false;
 	}
-	/// Show your results
-	//namedWindow("Hough Circle Transform Demo", CV_WINDOW_AUTOSIZE);
-	//imshow("Hough Circle Transform Demo", lol);
+
 
 }
 
@@ -228,7 +236,7 @@ void Target::findLaser(Mat imgInput, Mat *imgOutput)
 	int iHighV = colorRatio[5];
 	inRange(hsv_img, Scalar(iLowH, iLowS, iLowV), Scalar(iHighH, iHighS, iHighV), imgThresholded); //Threshold the image
 
-																								  //morphological opening (remove small objects from the foreground)
+	//morphological opening (remove small objects from the foreground)
 	erode(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
 	dilate(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
 
@@ -266,7 +274,7 @@ void Target::findLaser(Mat imgInput, Mat *imgOutput)
 		Point contour_center;
 		contour_center.x = boundRect.x + boundRect.width / 2;
 		contour_center.y = boundRect.y + boundRect.height / 2;
-		laser = contour_center;
+		*laser = contour_center;
 		s = out.str();
 		putText(imgCopy, s, Point(50, 50), CV_FONT_HERSHEY_COMPLEX, 1, Scalar(20, 40, 80), 3, 8);
 		drawContours(drawing, contours, i_cont, Scalar(125, 125, 250), 2);

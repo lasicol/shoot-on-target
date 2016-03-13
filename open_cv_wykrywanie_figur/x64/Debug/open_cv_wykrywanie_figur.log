@@ -1,17 +1,15 @@
-﻿Build started 12.03.2016 12:18:13.
+﻿Build started 13.03.2016 21:53:52.
      1>Project "C:\Users\Blazej\OneDrive\Dokumenty\KodyOneDrive\Visual\open_cv_wykrywanie_figur\open_cv_wykrywanie_figur\open_cv_wykrywanie_figur.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt Target.cpp main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt main.cpp
          main.cpp
-         Generating Code...
-         Skipping... (no relevant changes detected)
-         Target.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Blazej\OneDrive\Dokumenty\KodyOneDrive\Visual\open_cv_wykrywanie_figur\x64\Debug\open_cv_wykrywanie_figur.exe" /INCREMENTAL /NOLOGO opencv_world310d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Blazej\OneDrive\Dokumenty\KodyOneDrive\Visual\open_cv_wykrywanie_figur\x64\Debug\open_cv_wykrywanie_figur.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Blazej\OneDrive\Dokumenty\KodyOneDrive\Visual\open_cv_wykrywanie_figur\x64\Debug\open_cv_wykrywanie_figur.lib" /MACHINE:X64 x64\Debug\main.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Blazej\OneDrive\Dokumenty\KodyOneDrive\Visual\open_cv_wykrywanie_figur\x64\Debug\open_cv_wykrywanie_figur.exe" /INCREMENTAL /NOLOGO opencv_world310d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Blazej\OneDrive\Dokumenty\KodyOneDrive\Visual\open_cv_wykrywanie_figur\x64\Debug\open_cv_wykrywanie_figur.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Blazej\OneDrive\Dokumenty\KodyOneDrive\Visual\open_cv_wykrywanie_figur\x64\Debug\open_cv_wykrywanie_figur.lib" /MACHINE:X64 x64\Debug\Controller.obj
+         x64\Debug\main.obj
          x64\Debug\Target.obj
          open_cv_wykrywanie_figur.vcxproj -> C:\Users\Blazej\OneDrive\Dokumenty\KodyOneDrive\Visual\open_cv_wykrywanie_figur\x64\Debug\open_cv_wykrywanie_figur.exe
      1>Done Building Project "C:\Users\Blazej\OneDrive\Dokumenty\KodyOneDrive\Visual\open_cv_wykrywanie_figur\open_cv_wykrywanie_figur\open_cv_wykrywanie_figur.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.42
+Time Elapsed 00:00:02.25
